@@ -51,19 +51,15 @@ public class TurningServo implements Sendable {
     }
 
     void setTurning(SwerveModuleState state) {
-        if (m_experiments.enabled(Experiment.UseClosedLoopSteering)) {
-            offboard(state);
-        } else {
             onboard(state);
-        }
-
-        
     }
 
     void offboard(SwerveModuleState state) {
-        turningMotorControllerOutput = m_turningController.calculate(getTurningAngleRad(), state.angle.getRadians());
+        turningMotorControllerOutput = m_turningController.calculate(getTurningAngleRad(), 0);
+        System.out.println("Angle: " + getTurningAngleRad());
         turningFeedForwardOutput = getTurnSetpointVelocityRadS();
-        double turnOutputRadsPerSec =  MathUtil.applyDeadband(turningMotorControllerOutput + turningFeedForwardOutput, m_config.kSteeringDeadband);
+        double turnOutputRadsPerSec =  MathUtil.applyDeadband(turningMotorControllerOutput , m_config.kSteeringDeadband);
+        System.out.println("IMPORFTNQANT NUNBER: " +turnOutputRadsPerSec);
         m_turningMotor.setPIDVelocity(turnOutputRadsPerSec, 0);
     }
 

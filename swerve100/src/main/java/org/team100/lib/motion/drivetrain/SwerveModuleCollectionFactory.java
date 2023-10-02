@@ -49,25 +49,25 @@ public class SwerveModuleCollectionFactory {
                 return new SwerveModuleCollection(
                         m_moduleFactory.AMCANModule(
                                 "Front Left",
-                                11, // drive CAN
-                                5, // turn PWM
+                                3, // drive CAN
+                                36, // turn PWM
                                 1, // turn encoder
                                 0.911606), // turn offset
                         m_moduleFactory.AMCANModule(
                                 "Front Right",
                                 12, // drive CAN
-                                2, // turn PWM
+                                13, // turn PWM
                                 3, // turn encoder
                                 0.083566), // turn offset
                         m_moduleFactory.AMCANModule(
                                 "Rear Left",
-                                21, // drive CAN
-                                3, // turn PWM
+                                22, // drive CAN
+                                1 ,// turn PWM
                                 0, // turn encoder
                                 0.871471), // turn offset
                         m_moduleFactory.AMCANModule(
                                 "Rear Right",
-                                22, // drive CAN
+                                21, // drive CAN
                                 0, // turn PWM
                                 2, // turn encoder
                                 0.605593)); // turn offset

@@ -19,6 +19,7 @@ public class SwerveModule {
         SwerveModuleState state = SwerveModuleState.optimize(desiredState, m_turningServo.getTurningRotation());
         m_driveServo.setDrive(state);
         m_turningServo.setTurning(state);
+        System.out.println(state);
     }
 
     /////////////////////////////////////////////////////////////

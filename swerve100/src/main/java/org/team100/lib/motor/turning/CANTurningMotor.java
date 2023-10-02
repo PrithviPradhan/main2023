@@ -1,6 +1,7 @@
 package org.team100.lib.motor.turning;
 
 import org.team100.lib.encoder.turning.AnalogTurningEncoder;
+import org.team100.lib.encoder.turning.TurningEncoder;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
@@ -26,27 +27,27 @@ public class CANTurningMotor implements TurningMotor, Sendable {
         m_encoder = encoder;
         m_motor = new WPI_TalonSRX(channel);
         m_motor.configFactoryDefault();
-        m_motor.setSelectedSensorPosition(0);
         m_motor.setNeutralMode(NeutralMode.Brake);
         m_motor.enableCurrentLimit(true);
         m_motor.configSupplyCurrentLimit(
                 new SupplyCurrentLimitConfiguration(true, kTurningCurrentLimit, kTurningCurrentLimit, 0));
         this.canID = channel;
         m_motor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        m_motor.setSensorPhase(true);
         m_motor.configNominalOutputForward(0);
         m_motor.configNominalOutputReverse(0);
         m_motor.configPeakOutputForward(1);
         m_motor.configPeakOutputReverse(-1);
-        m_motor.configAllowableClosedloopError(0, 0, 30);
+        // m_motor.configAllowableClosedloopError(0, 0, 30);
         m_motor.config_kF(0, 0);
-        m_motor.config_kP(0, .5);
+        m_motor.config_kP(0, 0.5);
         m_motor.config_kI(0, 0);
         m_motor.config_kD(0, 0);
         double absolutePosition = 0;
         m_motor.setSelectedSensorPosition(absolutePosition);
         m_motor.configVoltageCompSaturation(11);
         m_motor.enableVoltageCompensation(true);
+        m_motor.setSensorPhase(false);
+        m_motor.setInverted(true);
         SmartDashboard.putData(String.format("CAN Turning Motor %s", name), this);
     }
 
@@ -66,6 +67,7 @@ public class CANTurningMotor implements TurningMotor, Sendable {
 
     public void setPIDVelocity(double outputRadiansPerSec, double outputRadiansPerSecPerSec) {
         double gearRatio = 355/6;
+        System.out.println("output radians/sec" + outputRadiansPerSec );
         double ticksPerRevolution = 28;
         double revolutionsPerSec = outputRadiansPerSec/(2*Math.PI);
         double revolutionsPerSec2 = outputRadiansPerSecPerSec/(2*Math.PI);

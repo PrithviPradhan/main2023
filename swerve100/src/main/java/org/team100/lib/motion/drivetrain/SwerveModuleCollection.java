@@ -83,11 +83,13 @@ public class SwerveModuleCollection implements SwerveModuleCollectionInterface {
     }
 
     public void setDesiredStates(SwerveModuleState[] swerveModuleStates) {
-        // System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaaa");
-
+        System.out.println("Front left");
         m_frontLeft.setDesiredState(swerveModuleStates[0]);
+        System.out.println("Front Right");
         m_frontRight.setDesiredState(swerveModuleStates[1]);
+        System.out.println("Rear left");
         m_rearLeft.setDesiredState(swerveModuleStates[2]);
+        System.out.println("Rear Right");
         m_rearRight.setDesiredState(swerveModuleStates[3]);
     }
 
