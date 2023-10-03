@@ -21,6 +21,7 @@ public class CANTurningMotor implements TurningMotor, Sendable {
     // private final int channel;
     private final int canID;
     public static final double kTurningCurrentLimit = 7;
+    private final double gearRatio = 355/6;
     private final AnalogTurningEncoder m_encoder;
 
     public CANTurningMotor(String name, int channel, AnalogTurningEncoder encoder) {
@@ -66,7 +67,6 @@ public class CANTurningMotor implements TurningMotor, Sendable {
     }
 
     public void setPIDVelocity(double outputRadiansPerSec, double outputRadiansPerSecPerSec) {
-        double gearRatio = 355/6;
         System.out.println("output radians/sec" + outputRadiansPerSec );
         double ticksPerRevolution = 28;
         double revolutionsPerSec = outputRadiansPerSec/(2*Math.PI);
@@ -91,11 +91,13 @@ public class CANTurningMotor implements TurningMotor, Sendable {
     }
 
     @Override
+
     public void initSendable(SendableBuilder builder) {
         builder.setSmartDashboardType("CANTurningMotor");
         builder.addDoubleProperty("Device ID", () -> canID, null);
         builder.addDoubleProperty("Output", this::get, null);
         builder.addDoubleProperty("Encoder Value", () -> m_motor.getSelectedSensorPosition(), null);
+        builder.addDoubleProperty("Velocitty (rots per sec)", () -> m_motor.getSelectedSensorVelocity()/(gearRatio*28)*10,null);
     }
 
 }

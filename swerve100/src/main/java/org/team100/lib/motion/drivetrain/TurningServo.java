@@ -51,7 +51,7 @@ public class TurningServo implements Sendable {
     }
 
     void setTurning(SwerveModuleState state) {
-            onboard(state);
+            offboard(state);
     }
 
     void offboard(SwerveModuleState state) {
